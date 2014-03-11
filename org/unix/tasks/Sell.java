@@ -3,11 +3,8 @@ package org.unix.tasks;
 import org.parabot.environment.api.utils.Time;
 import org.parabot.environment.input.Mouse;
 import org.parabot.environment.scripts.framework.Strategy;
-import org.rev317.api.methods.Camera;
+import org.rev317.api.methods.*;
 import org.rev317.api.wrappers.interactive.Npc;
-import org.rev317.api.methods.Interfaces;
-import org.rev317.api.methods.Inventory;
-import org.rev317.api.methods.Npcs;
 import org.rev317.api.wrappers.hud.Item;
 import org.rev317.api.wrappers.scene.Tile;
 import org.unix.vars.Generic;
@@ -24,6 +21,7 @@ public class Sell implements Strategy {
 
     @Override
     public boolean activate() {
+
         return Inventory.isFull() || Interfaces.get(shopInterface).isVisible();
     }
 
@@ -31,9 +29,9 @@ public class Sell implements Strategy {
     public void execute() {
 
         if (Interfaces.get(3824).isVisible()) {
-            if (Inventory.getCount(Generic.currentStall.getLoot()) > 0) {
+            if (Inventory.getCount() > 1) {
                 for (Item i : Inventory.getItems()) {
-                    if (i.getId() == Stalls.CRAFTING_STALL.getLoot() || i.getId() == Stalls.FOOD_STALL.getLoot() || i.getId() == Stalls.GENERAL_STALL.getLoot() || i.getId() == Stalls.MAGIC_STALL.getLoot() || i.getId() == Stalls.SCIMITAR_STALL.getLoot()) {
+                    if (i.getId() != 995) {
                         i.interact("Sell 10");
                     }
                 }
@@ -43,6 +41,7 @@ public class Sell implements Strategy {
                 Mouse.getInstance().click(490, 20, true);
             }
         } else {
+
             if (Npcs.getNearest(522)[0] != null) {
                 Npc shop = Npcs.getNearest(522)[0];
 

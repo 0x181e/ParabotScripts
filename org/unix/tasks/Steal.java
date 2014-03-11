@@ -29,6 +29,9 @@ public class Steal implements Strategy {
         if (SceneObjects.getNearest(Generic.currentStall.getId()) != null) {
             SceneObject targ = SceneObjects.getNearest(Generic.currentStall.getId())[0];
 
+            if (Walking.isMoving())
+                return;
+
             if (targ.isOnScreen()) {
                 targ.interact("Steal from");
                 Time.sleep(500, 1000);
